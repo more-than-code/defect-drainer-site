@@ -9,7 +9,7 @@
     "preview": "vite preview --port 8898 --strictPort",
     "prepare": "svelte-kit sync || echo ''",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --fail-on-warnings",
-    "test": "node --test tests/"
+    "test": "node --test 'tests/*.test.mjs'"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "3.0.10",
