@@ -3,8 +3,10 @@
 Static landing site, spec `docs/hosting-and-landing.md` §4.4. SvelteKit 2 with
 `adapter-static`, `prerender = true` and `csr = false`: the output in `build/` is
 plain HTML and CSS with no client JavaScript. `scripts/postbuild.mjs` deletes the
-client bundles SvelteKit still emits (they would carry gated wording) and writes
-`build/_redirects`.
+client bundles SvelteKit still emits (they would carry gated wording). There is
+no `_redirects`: the apex serves only the site, and the console lives on
+`console.defectdrainer.com`, reached by the Sign in button (spec H9 as amended
+2026-11-19).
 
 ## Build
 
@@ -21,10 +23,7 @@ the build. A gated claim is absent from the HTML and `llms.txt` while its flag i
 | `WORKER_LIVE` | "on your worker" wording; How it works "Add a worker" | the worker (W3) is live in prod |
 | `GITHUB_LIVE` | How it works "Sign in and connect GitHub" | the GitHub App (R4a) is live in prod |
 | `OSS_RELEASE` | the "The worker is open source" section | the first non-prerelease worker release is out |
-| `LAUNCH` | the launch `_redirects` (console paths only, 301) | launch day; needs the other two live flags and approved legal text |
-
-Without `LAUNCH`, `_redirects` sends every path to `https://console.defectdrainer.com/:splat`
-with a 302 (pre-launch, H9).
+| `LAUNCH` | nothing in the output; it is the launch-readiness check (H8) | launch day; the build fails unless the other two live flags are on and approved legal text exists |
 
 ## Privacy and Terms
 
@@ -37,8 +36,8 @@ page is built or linked, and `LAUNCH=1` fails.
 `tests/guards.test.mjs` builds three variants into `.test-out/` (all flags off,
 gates on, launch with placeholder legal fixtures) and checks every file: the
 forbidden-names list, "open source" only about the worker, no `®`, no `<script>`
-or `.js`, no URL outside our hosts and the public worker repo, gated wording, the
-two `_redirects` versions, and the legal-page rules.
+or `.js`, no URL outside our hosts and the public worker repo, gated wording, no
+`_redirects` in any build, and the legal-page rules.
 
 ## Release
 

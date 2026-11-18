@@ -1,2 +1,0 @@
-# Pre-launch (H9): the apex sends everything to the console, temporarily.
-/*  https://console.defectdrainer.com/:splat  302

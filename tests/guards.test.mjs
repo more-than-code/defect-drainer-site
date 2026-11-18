@@ -1,7 +1,7 @@
 // Guards for the landing site (docs/hosting-and-landing.md §4.4 and §5.7).
 // They build three variants into .test-out/ and check every file in each,
 // plus `build/` when `pnpm build` made one (as `make site` does):
-//   off    every flag 0: the pre-launch build
+//   off    every flag 0: the build Ops uploads before launch
 //   on     WORKER_LIVE, GITHUB_LIVE, OSS_RELEASE = 1, LAUNCH = 0
 //   launch every flag 1, with placeholder (non-legal) Privacy/Terms fixtures
 import assert from 'node:assert/strict';
@@ -48,7 +48,7 @@ function builtFiles() {
 
 /** Hand-written sources that end up in, or produce, the output. */
 function sourceFiles() {
-  return ['src', 'static', 'og', 'redirects'].flatMap((d) =>
+  return ['src', 'static', 'og'].flatMap((d) =>
     files(join(SITE, d)).map((f) => ({ ...f, rel: `${d}/${f.rel}`, variant: 'source' })),
   );
 }
@@ -154,20 +154,10 @@ describe('gate flags', () => {
 });
 
 describe('launch', () => {
-  test('pre-launch: _redirects sends everything to the console with 302', () => {
-    for (const variant of ['off', 'on']) {
-      const redirects = readFileSync(join(outputs[variant], '_redirects'), 'utf8');
-      assert.equal(redirects, readFileSync(join(SITE, 'redirects/prelaunch.txt'), 'utf8'));
-      assert.match(redirects, /^\/\*\s+https:\/\/console\.defectdrainer\.com\/:splat\s+302$/m);
+  test('no build writes _redirects: the apex serves only the site (H9 as amended)', () => {
+    for (const [variant, dir] of Object.entries(outputs)) {
+      assert.equal(existsSync(join(dir, '_redirects')), false, variant);
     }
-  });
-
-  test('launch: _redirects sends only console paths, with 301', () => {
-    const redirects = readFileSync(join(outputs.launch, '_redirects'), 'utf8');
-    assert.equal(redirects, readFileSync(join(SITE, 'redirects/launch.txt'), 'utf8'));
-    const rules = redirects.split('\n').filter((l) => l && !l.startsWith('#'));
-    for (const rule of rules) assert.match(rule, /^\/[a-z]+(\/\*)?\s+https:\/\/console\.defectdrainer\.com\/\S+\s+301$/);
-    assert.doesNotMatch(redirects, /^\/\*/m);
   });
 
   test('no legal text: /privacy and /terms are not built, nor linked or in the sitemap', () => {
