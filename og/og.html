@@ -1,0 +1,49 @@
+<!doctype html>
+<!--
+  Source of static/og.png (1200x630). Regenerate after editing, from site/:
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new \
+    --user-data-dir="$(mktemp -d)" --hide-scrollbars --window-size=1200,630 \
+    --screenshot="$PWD/static/og.png" "file://$PWD/og/og.html"
+  Made-up content only; the guards scan this file too.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+      body {
+        display: flex; flex-direction: column; justify-content: center; gap: 44px;
+        padding: 0 80px; box-sizing: border-box;
+        background: #0e1513; color: #e6efeb;
+        font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+      }
+      .brand { display: flex; align-items: center; gap: 20px; font-size: 34px; font-weight: 700; }
+      h1 { margin: 0; font-size: 76px; line-height: 1.05; letter-spacing: -0.02em; }
+      ol { display: flex; gap: 30px; margin: 0; padding: 0; list-style: none; }
+      li {
+        flex: 1; padding: 20px 18px; border: 2px solid #2b3a35; border-radius: 16px; background: #18231f;
+        font-size: 30px; font-weight: 700; text-align: center; position: relative;
+      }
+      li span { display: block; margin-top: 6px; color: #a7b7b1; font-size: 19px; font-weight: 500; }
+      li.ship { border-color: #5dcaa5; }
+      li + li::before {
+        content: '→'; position: absolute; left: -15px; top: 50%; transform: translate(-50%, -50%);
+        color: #5dcaa5; font-size: 26px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0F6E56"/><path d="M32 11C32 11 17 28 17 38.5a15 15 0 0 0 30 0C47 28 32 11 32 11Z" fill="#fff"/><path d="M24.5 39l5.5 5.5 10-11" fill="none" stroke="#0F6E56" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Defect Drainer
+    </div>
+    <h1>Bugs in, verified fixes out.</h1>
+    <ol>
+      <li>Report<span>bug + screenshot</span></li>
+      <li>Inventory<span>one per bug</span></li>
+      <li>Fix<span>isolated branch</span></li>
+      <li>Prove<span>checks + review</span></li>
+      <li class="ship">Ship<span>a PR you approve</span></li>
+    </ol>
+  </body>
+</html>
