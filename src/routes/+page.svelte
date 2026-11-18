@@ -6,6 +6,8 @@
   //   OSS_RELEASE  the Open source section
   import {
     DESCRIPTION,
+    EARLY_ACCESS_NOTE,
+    EARLY_ACCESS_NOTE_PRE_WORKER,
     SIGN_IN_URL,
     SITE_ORIGIN,
     SUPPORT_EMAIL,
@@ -65,7 +67,7 @@
       <a class="button" href={SIGN_IN_URL}>Sign in</a>
       <a class="button secondary" href="#how-it-works">How it works</a>
     </div>
-    <p class="note">Invite only during early access.</p>
+    <p class="note">{f.WORKER_LIVE ? EARLY_ACCESS_NOTE : EARLY_ACCESS_NOTE_PRE_WORKER}</p>
   </div>
 </section>
 

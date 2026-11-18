@@ -94,6 +94,20 @@ describe('wording', () => {
     assert.deepEqual(hits, []);
   });
 
+  test('early-access line: the pre-worker sentence only while WORKER_LIVE=0 (brief C.2)', () => {
+    const pre =
+      'Invite only during early access. Fixes run on your own machine through the Defect Drainer worker, which arrives with its first release.';
+    const hero = (dir) => visibleText(readFileSync(join(dir, 'index.html'), 'utf8')).replace(/\s+/g, ' ');
+    const llms = (dir) => readFileSync(join(dir, 'llms.txt'), 'utf8');
+    assert.ok(hero(outputs.off).includes(pre), 'off: hero');
+    assert.ok(llms(outputs.off).includes(pre), 'off: llms.txt');
+    for (const variant of ['on', 'launch']) {
+      assert.ok(!hero(outputs[variant]).includes('arrives with its first release'), `${variant}: hero`);
+      assert.ok(!llms(outputs[variant]).includes('arrives with its first release'), `${variant}: llms.txt`);
+      assert.ok(hero(outputs[variant]).includes('Invite only during early access.'), `${variant}: hero short line`);
+    }
+  });
+
   test('no registered-trademark sign anywhere (™ wording only)', () => {
     const hits = [...builtFiles(), ...sourceFiles()]
       .filter((f) => /®|&reg;|&#174;|&#xae;/i.test(f.text))

@@ -3,7 +3,14 @@ export const prerender = true;
 // llms.txt: what Defect Drainer is, its safety model, and how an agent files a
 // defect. Gated wording follows the same build flags as the home page.
 import { readFlags } from '$lib/flags.js';
-import { CONSOLE_ORIGIN, INTAKE_URL, SITE_ORIGIN, SUPPORT_EMAIL, WORKER_REPO_URL } from '$lib/site.js';
+import {
+  CONSOLE_ORIGIN,
+  EARLY_ACCESS_NOTE_PRE_WORKER,
+  INTAKE_URL,
+  SITE_ORIGIN,
+  SUPPORT_EMAIL,
+  WORKER_REPO_URL,
+} from '$lib/site.js';
 
 export function GET() {
   const f = readFlags();
@@ -13,7 +20,7 @@ export function GET() {
     '',
     '> Bugs in, verified fixes out. Defect Drainer collects bug reports with screenshots, runs your own coding agent on them in isolated git branches, re-runs your checks, has an independent reviewer look at every fix, and opens a pull request only for fixes that pass.',
     '',
-    'Defect Drainer is invite-only during early access.',
+    f.WORKER_LIVE ? 'Defect Drainer is invite-only during early access.' : EARLY_ACCESS_NOTE_PRE_WORKER,
     '',
     '## What it does',
     '',

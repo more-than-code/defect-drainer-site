@@ -20,7 +20,7 @@ the build. A gated claim is absent from the HTML and `llms.txt` while its flag i
 
 | Flag | Turns on | Set to 1 when |
 |---|---|---|
-| `WORKER_LIVE` | "on your worker" wording; How it works "Add a worker" | the worker (W3) is live in prod |
+| `WORKER_LIVE` | "on your worker" wording; How it works "Add a worker"; the short early-access line (while off, the hero and `llms.txt` say the worker arrives with its first release) | the worker (W3) is live in prod |
 | `GITHUB_LIVE` | How it works "Sign in and connect GitHub" | the GitHub App (R4a) is live in prod |
 | `OSS_RELEASE` | the "The worker is open source" section | the first non-prerelease worker release is out |
 | `LAUNCH` | nothing in the output; it is the launch-readiness check (H8) | launch day; the build fails unless the other two live flags are on and approved legal text exists |
