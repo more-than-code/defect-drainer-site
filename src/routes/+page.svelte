@@ -84,7 +84,7 @@
       <li>
         <span class="step-name">Inventory</span>
         <strong>One record per bug</strong>
-        <span>Per app, with evidence, severity and status.</span>
+        <span>Per project, with evidence, severity and status.</span>
         <code>open · high</code>
       </li>
       <li>
@@ -194,7 +194,7 @@
       <div class="card">
         <span class="kicker">inventory</span>
         <h3>Every bug in one place</h3>
-        <p>Defects per app, with screenshots, severity and status. Search and analytics included.</p>
+        <p>Defects per project, with screenshots, severity and status. Search and analytics included.</p>
       </div>
       <div class="card">
         <span class="kicker">batch fix</span>
@@ -242,7 +242,7 @@
         <ul class="plain">
           <li>Merge anything</li>
           <li>Push before you click Create PR</li>
-          <li>See your other apps' secrets or Defect Drainer's own settings</li>
+          <li>See your other projects' secrets or Defect Drainer's own settings</li>
           <li>Read test-account passwords from Defect Drainer: it never stores them</li>
         </ul>
       </div>
