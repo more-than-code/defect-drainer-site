@@ -14,6 +14,8 @@
     TITLE,
     WORKER_REPO_URL,
   } from '$lib/site.js';
+  import Icon from '$lib/components/Icon.svelte';
+  import LoopRing from '$lib/components/LoopRing.svelte';
 
   let { data } = $props();
   const f = $derived(data.flags);
@@ -121,70 +123,24 @@
 </svelte:head>
 
 <section class="hero">
-  <div class="wrap">
-    <h1>Bugs in, verified fixes out.</h1>
-    <p class="lede">
-      Collect bugs with screenshots. Defect Drainer runs your own coding agent on them in isolated branches,
-      re-runs your checks and has an independent reviewer look at every fix, then opens a pull request.
-    </p>
-    <div class="actions">
-      <a class="button" href={SIGN_IN_URL}>Sign in</a>
-      <a class="button secondary" href="#how-it-works">How it works</a>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">A defect harness, not just a tracker</p>
+      <h1>Report it anywhere.<br />Fix it with any agent.<br />Ship only what's proven.</h1>
+      <p class="lede">
+        Testers, customers and agents file bugs with screenshots. A coding agent fixes each one in its own branch:
+        ours, or yours over MCP. Defect Drainer re-runs your checks and has an independent reviewer look at every fix
+        before a pull request opens.
+      </p>
+      <div class="actions">
+        <a class="button" href={SIGN_IN_URL}>Sign in</a>
+        <a class="button secondary" href="#how-it-works">How it works</a>
+      </div>
+      <p class="note">{f.WORKER_LIVE ? EARLY_ACCESS_NOTE : EARLY_ACCESS_NOTE_PRE_WORKER}</p>
     </div>
-    <p class="note">{f.WORKER_LIVE ? EARLY_ACCESS_NOTE : EARLY_ACCESS_NOTE_PRE_WORKER}</p>
-  </div>
-</section>
-
-<section class="band" aria-labelledby="loop-title">
-  <div class="wrap">
-    <h2 id="loop-title" class="visually-hidden">The loop</h2>
-    <ol class="loop">
-      <li>
-        <span class="step-name">Report</span>
-        <strong>A bug with a screenshot</strong>
-        <span>From the console, an agent over MCP, or the intake API.</span>
-        <code>DEF-0142</code>
-      </li>
-      <li>
-        <span class="step-name">Inventory</span>
-        <strong>One record per bug</strong>
-        <span>Per project, with evidence, severity and status.</span>
-        <code>open · high</code>
-      </li>
-      <li>
-        <span class="step-name">Fix</span>
-        <strong>Your agent, a fresh branch</strong>
-        <span>In an isolated git worktree{#if f.WORKER_LIVE}&nbsp;on your own worker{/if}.</span>
-        <code>BATCH-0031</code>
-      </li>
-      <li>
-        <span class="step-name">Prove</span>
-        <strong>Checks and review</strong>
-        <span>Your check commands re-run, plus an independent reviewer.</span>
-        <code>✓ verified</code>
-      </li>
-      <li>
-        <span class="step-name">Ship</span>
-        <strong>A PR you approve</strong>
-        <span>Nothing is pushed until you click Create PR.</span>
-        <code>PR #87</code>
-      </li>
-    </ol>
-  </div>
-</section>
-
-<section aria-labelledby="action-title">
-  <div class="wrap">
-    <h2 id="action-title">See it in action</h2>
-    <p class="section-lede">
-      One defect from a made-up shop app, after the agent's run. Every gate below has to pass before the
-      defect can be resolved.
-    </p>
-    <figure class="example">
-      <figcaption>
-        <span>Example · <code>BATCH-0031 · acme-shop</code></span>
-        <span class="ok">✓ ready to ship</span>
-      </figcaption>
+    <figure class="hero-art">
+      <div class="window example">
+        <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>BATCH-0031 · acme-shop</span></div>
       <div class="defect">
         <span class="tag">DEF-0142 · high</span>
         <h3>Cart total shows NaN after removing the last coupon</h3>
@@ -213,7 +169,164 @@
         </li>
       </ul>
       <p class="branch">Branch <code>defect-drainer/BATCH-0031</code> · not pushed until you click Create PR.</p>
+      </div>
+      <figcaption class="illustrative">Illustrative interface. One defect from a made-up shop app, after the agent's run.</figcaption>
     </figure>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="loop-title">
+  <div class="wrap">
+    <h2 id="loop-title" class="visually-hidden">The loop</h2>
+    <ol class="loop">
+      <li>
+        <span class="step-icon"><Icon name="report" /></span>
+        <span class="step-name">Report</span>
+        <strong>A bug with a screenshot</strong>
+        <span>From the console, an agent over MCP, or the intake API.</span>
+        <code>DEF-0142</code>
+      </li>
+      <li>
+        <span class="step-icon"><Icon name="inventory" /></span>
+        <span class="step-name">Inventory</span>
+        <strong>One record per bug</strong>
+        <span>Per project, with evidence, severity and status.</span>
+        <code>open · high</code>
+      </li>
+      <li>
+        <span class="step-icon"><Icon name="fix" /></span>
+        <span class="step-name">Fix</span>
+        <strong>Your agent, a fresh branch</strong>
+        <span>In an isolated git worktree{#if f.WORKER_LIVE}&nbsp;on your own worker{/if}.</span>
+        <code>BATCH-0031</code>
+      </li>
+      <li>
+        <span class="step-icon"><Icon name="prove" /></span>
+        <span class="step-name">Prove</span>
+        <strong>Checks and review</strong>
+        <span>Your check commands re-run, plus an independent reviewer.</span>
+        <code>✓ verified</code>
+      </li>
+      <li>
+        <span class="step-icon"><Icon name="ship" /></span>
+        <span class="step-name">Ship</span>
+        <strong>A PR you approve</strong>
+        <span>Nothing is pushed until you click Create PR.</span>
+        <code>PR #87</code>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section aria-labelledby="get-title">
+  <div class="wrap">
+    <h2 id="get-title">What you get</h2>
+    <div class="feature">
+      <div class="feature-text">
+        <span class="num">01</span>
+        <h3>Report from anywhere</h3>
+        <p class="feature-lede">Everyone who sees the bug can file it, with or without GitHub.</p>
+        <ul class="ticks">
+          <li><Icon name="check" size={16} /><span>Testers and customers you invite report with a Google sign-in. No GitHub access needed.</span></li>
+          <li><Icon name="check" size={16} /><span>Your app or tools file through the intake API, with an intake-only token and up to 12 screenshots.</span></li>
+          <li><Icon name="check" size={16} /><span>File a defect straight from a failed step of a test run, by hand or by an agent.</span></li>
+          <li><Icon name="check" size={16} /><span>One inventory per project, with evidence, severity and status.</span></li>
+        </ul>
+      </div>
+      <div class="feature-art">
+        <div class="window">
+          <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>Inventory · acme-shop</span></div>
+          <ul class="rows">
+            <li><span class="row-icon"><Icon name="camera" size={18} /></span><span class="row-text"><strong>Cart total shows NaN after removing the last coupon</strong><small>DEF-0142 · 1 screenshot · from the console</small></span><span class="pill high">high</span></li>
+            <li><span class="row-icon"><Icon name="inbox" size={18} /></span><span class="row-text"><strong>Checkout button hidden behind the keyboard</strong><small>DEF-0139 · 2 screenshots · from the intake API</small></span><span class="pill">claimed</span></li>
+            <li><span class="row-icon"><Icon name="plan" size={18} /></span><span class="row-text"><strong>Search ignores accented letters</strong><small>DEF-0131 · from a failed test-run step</small></span><span class="pill ok-pill">verified</span></li>
+            <li><span class="row-icon"><Icon name="agent" size={18} /></span><span class="row-text"><strong>Order email shows the wrong currency</strong><small>DEF-0128 · filed by an agent over MCP</small></span><span class="pill">open</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="feature flip">
+      <div class="feature-text">
+        <span class="num">02</span>
+        <h3>Any agent, one work log</h3>
+        <p class="feature-lede">Our harness or your own agent. The same record either way.</p>
+        <ul class="ticks">
+          <li><Icon name="check" size={16} /><span>Claude Code or Grok run by Defect Drainer, many defects in one batch, each in its own git worktree.</span></li>
+          <li><Icon name="check" size={16} /><span>Or your own agent over MCP: it claims a defect, posts progress, attaches evidence and submits its branch.</span></li>
+          <li><Icon name="check" size={16} /><span>A claim keeps other agents off the defect, and lapses after 4 idle hours.</span></li>
+          <li><Icon name="check" size={16} /><span>Defect Drainer never holds your agent's login.</span></li>
+        </ul>
+      </div>
+      <div class="feature-art">
+        <div class="window">
+          <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>Your agent · MCP</span></div>
+          <ol class="chat-log">
+            <li class="you"><span class="who">You</span><p>Fix DEF-0142 in acme-shop.</p></li>
+            <li><span class="who">Agent</span><p><code>claim_defect</code> DEF-0142 · claimed, other sessions are refused</p></li>
+            <li><span class="who">Agent</span><p><code>report_progress</code> “Reproduced: the total is NaN once the coupon list is empty.”</p></li>
+            <li><span class="who">Agent</span><p><code>attach_evidence</code> after.png · <code>submit_fix</code> branch <code>fix/def-0142</code></p></li>
+            <li class="dd"><span class="who">Defect Drainer</span><p>Re-ran your checks and the reviewer on that commit. <strong>Verified.</strong></p></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-text">
+        <span class="num">03</span>
+        <h3>Proof you don't have to trust</h3>
+        <p class="feature-lede">A fix counts only when Defect Drainer has checked it itself.</p>
+        <ul class="ticks">
+          <li><Icon name="check" size={16} /><span>Your own check commands, re-run by Defect Drainer on the exact commit.</span></li>
+          <li><Icon name="check" size={16} /><span>A separate read-only reviewer. A critical or high finding blocks the fix.</span></li>
+          <li><Icon name="check" size={16} /><span>An after-fix screenshot, or "no visual change" with a reason.</span></li>
+          <li><Icon name="check" size={16} /><span>Not proven? It stays open with the reason. Your agent gets the same rules as ours.</span></li>
+        </ul>
+      </div>
+      <div class="feature-art">
+        <div class="window">
+          <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>DEF-0139 · verdict</span></div>
+          <div class="verdict">
+            <span class="verdict-icon"><Icon name="x" size={22} /></span>
+            <div>
+              <strong>Not verified</strong>
+              <p><code>pnpm test</code> failed on the submitted commit: 2 failing. The defect stays open with the reason, and the agent can push again and ask for a new check.</p>
+            </div>
+          </div>
+          <ul class="checks">
+            <li><Icon name="check" size={16} /> Baseline recorded before the change</li>
+            <li class="bad"><Icon name="x" size={16} /> Your check commands, re-run by Defect Drainer</li>
+            <li class="wait"><Icon name="review" size={16} /> Independent review, after the checks pass</li>
+            <li class="wait"><Icon name="camera" size={16} /> Fix evidence, or no visual change with a reason</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="feature flip">
+      <div class="feature-text">
+        <span class="num">04</span>
+        <h3>You ship it</h3>
+        <p class="feature-lede">Nothing reaches your repository until you say so.</p>
+        <ul class="ticks">
+          <li><Icon name="check" size={16} /><span>Each verified fix waits on its branch until you click Create PR.</span></li>
+          <li><Icon name="check" size={16} /><span>Merge the pull request in your repository as usual.</span></li>
+          <li><Icon name="check" size={16} /><span>Defect Drainer resolves the defect only when it can see on GitHub that the merged pull request is that fix.</span></li>
+        </ul>
+      </div>
+      <div class="feature-art">
+        <div class="window">
+          <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>BATCH-0031 · ready</span></div>
+          <div class="ship">
+            <p class="ship-branch"><Icon name="ship" size={18} /> <code>defect-drainer/BATCH-0031</code> · 3 files · not pushed yet</p>
+            <div class="ship-actions"><span class="fake-button">Create PR</span><span class="muted">You review the diff first.</span></div>
+            <ol class="timeline">
+              <li><Icon name="ship" size={16} /> PR #87 opened in your repository</li>
+              <li><Icon name="merge" size={16} /> You merge it, as usual</li>
+              <li><Icon name="check" size={16} /> Defect Drainer checks the merge on GitHub and resolves DEF-0142</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -254,72 +367,35 @@
   </div>
 </section>
 
-<section aria-labelledby="get-title">
-  <div class="wrap">
-    <h2 id="get-title">What you get</h2>
-    <div class="grid three">
-      <div class="card">
-        <span class="kicker">inventory</span>
-        <h3>Every bug in one place</h3>
-        <p>Defects per project, with screenshots, severity and status. Testers and customers you invite report with a Google sign-in, with no GitHub access.</p>
-      </div>
-      <div class="card">
-        <span class="kicker">batch fix</span>
-        <h3>Many bugs, one batch</h3>
-        <p>Pick defects and start a batch. Each runs in its own git worktree, cut from the branch you choose.</p>
-      </div>
-      <div class="card">
-        <span class="kicker">verify</span>
-        <h3>Proof you don't have to trust</h3>
-        <p>Defect Drainer runs your app's own check commands itself and requires fix evidence before anything is resolved.</p>
-      </div>
-      <div class="card">
-        <span class="kicker">review</span>
-        <h3>A second pair of eyes</h3>
-        <p>A separate read-only reviewer checks every fix. Critical or high findings block it.</p>
-      </div>
-      <div class="card">
-        <span class="kicker">test plans</span>
-        <h3>Test runs, too</h3>
-        <p>Run a test plan by hand or with an agent, and file a defect straight from a failed step.</p>
-      </div>
-      <div class="card">
-        <span class="kicker">bring your own agent</span>
-        <h3>Any agent, one work log</h3>
-        <p>Claude Code or Grok run by Defect Drainer, or your own agent over MCP: it claims a defect, posts progress, attaches evidence and submits its branch. Same proof rules for both. Defect Drainer never holds your agent's login.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="agent" aria-labelledby="agent-title">
+<section id="agent" aria-labelledby="agent-title">
   <div class="wrap">
     <h2 id="agent-title">What the agent can and can't do</h2>
     <div class="grid two">
       <div class="card">
         <h3>Can</h3>
-        <ul class="plain">
-          <li>Change code in a job branch{#if f.WORKER_LIVE}, on your worker{/if}</li>
-          <li>Run your check commands</li>
-          <li>Propose a fix for you to review</li>
+        <ul class="marks">
+          <li><span class="yes"><Icon name="check" size={18} /></span><span>Change code in a job branch{#if f.WORKER_LIVE}, on your worker{/if}</span></li>
+          <li><span class="yes"><Icon name="check" size={18} /></span><span>Run your check commands</span></li>
+          <li><span class="yes"><Icon name="check" size={18} /></span><span>Propose a fix for you to review</span></li>
         </ul>
       </div>
       <div class="card">
         <h3>Can't</h3>
-        <ul class="plain">
-          <li>Merge anything</li>
-          <li>Push before you click Create PR</li>
-          <li>See your other projects' secrets or Defect Drainer's own settings</li>
-          <li>Read test-account passwords from Defect Drainer: it never stores them</li>
+        <ul class="marks">
+          <li><span class="no"><Icon name="x" size={18} /></span><span>Merge anything</span></li>
+          <li><span class="no"><Icon name="x" size={18} /></span><span>Push before you click Create PR</span></li>
+          <li><span class="no"><Icon name="x" size={18} /></span><span>See your other projects' secrets or Defect Drainer's own settings</span></li>
+          <li><span class="no"><Icon name="x" size={18} /></span><span>Read test-account passwords from Defect Drainer: it never stores them</span></li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section id="how-it-works" aria-labelledby="how-title">
+<section class="band" id="how-it-works" aria-labelledby="how-title">
   <div class="wrap">
     <h2 id="how-title">How it works</h2>
+    <div class="how-grid">
     <ol class="steps">
       {#each steps as step (step.title)}
         <li class="card">
@@ -328,6 +404,8 @@
         </li>
       {/each}
     </ol>
+    <div class="ring"><LoopRing /></div>
+    </div>
   </div>
 </section>
 
@@ -348,11 +426,13 @@ go build ./cmd/dd-worker</code></pre>
 {/if}
 
 <section aria-labelledby="start-title">
-  <div class="wrap start">
-    <h2 id="start-title">Get started</h2>
-    <p>Defect Drainer is invite-only during early access. Ask for an invite, or sign in if you have one.</p>
-    <p class="email"><a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a></p>
-    <a class="button" href={SIGN_IN_URL}>Sign in</a>
+  <div class="wrap">
+    <div class="cta">
+      <h2 id="start-title">Drain your first defect</h2>
+      <p>Defect Drainer is invite-only during early access. Ask for an invite, or sign in if you have one.</p>
+      <a class="button" href={SIGN_IN_URL}>Sign in</a>
+      <p class="email"><a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a></p>
+    </div>
   </div>
 </section>
 
@@ -395,7 +475,92 @@ go build ./cmd/dd-worker</code></pre>
     white-space: nowrap;
   }
   .hero {
-    padding: 72px 0 56px;
+    padding: 56px 0 40px;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 4.2vw, 2.9rem);
+    line-height: 1.12;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 40px;
+    align-items: center;
+  }
+  .hero-art {
+    margin: 0;
+    width: 100%;
+  }
+  .hero-art .illustrative {
+    margin-top: 10px;
+    text-align: center;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+  @media (max-width: 860px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+  .step-icon {
+    display: flex;
+  }
+  .illustrative {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .chat-log {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 16px;
+    list-style: none;
+  }
+  .chat-log li {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--muted) 8%, transparent);
+    font-size: 0.92rem;
+  }
+  .chat-log li.you {
+    background: color-mix(in srgb, var(--brand) 12%, transparent);
+  }
+  .chat-log li.dd {
+    border: 1px solid color-mix(in srgb, var(--brand) 40%, transparent);
+    background: color-mix(in srgb, var(--brand) 6%, transparent);
+  }
+  .chat-log p {
+    margin: 2px 0 0;
+  }
+  .who {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .marks {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .marks li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .yes {
+    color: var(--brand-text);
+  }
+  .no {
+    color: var(--muted);
   }
   .lede {
     max-width: 44rem;
@@ -459,22 +624,7 @@ go build ./cmd/dd-worker</code></pre>
     }
   }
   .example {
-    margin: 0;
-    max-width: 760px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--card);
-    overflow: hidden;
-  }
-  .example figcaption {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg-soft);
-    font-size: 0.9rem;
+    font-size: 0.92rem;
   }
   .defect {
     padding: 16px;
@@ -484,8 +634,7 @@ go build ./cmd/dd-worker</code></pre>
     margin: 0;
     color: var(--muted);
   }
-  .tag,
-  .kicker {
+  .tag {
     display: inline-block;
     margin-bottom: 6px;
     color: var(--brand-text);
@@ -621,14 +770,10 @@ go build ./cmd/dd-worker</code></pre>
     display: grid;
     gap: 16px;
   }
-  .grid.three {
-    grid-template-columns: repeat(3, 1fr);
-  }
   .grid.two {
     grid-template-columns: repeat(2, 1fr);
   }
   @media (max-width: 860px) {
-    .grid.three,
     .grid.two {
       grid-template-columns: 1fr;
     }
@@ -642,13 +787,6 @@ go build ./cmd/dd-worker</code></pre>
   .card p {
     margin: 0;
     color: var(--muted);
-  }
-  .plain {
-    margin: 0;
-    padding-left: 1.2em;
-  }
-  .plain li + li {
-    margin-top: 4px;
   }
   .steps {
     display: grid;
@@ -673,9 +811,6 @@ go build ./cmd/dd-worker</code></pre>
     white-space: pre;
     overflow-wrap: normal;
   }
-  .start {
-    text-align: center;
-  }
   .email {
     font-size: 1.2rem;
     font-weight: 600;
@@ -686,5 +821,241 @@ go build ./cmd/dd-worker</code></pre>
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+  }
+  .eyebrow {
+    margin: 0 0 14px;
+    color: var(--brand-text);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .window {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--card);
+    box-shadow: 0 18px 40px -24px rgb(10 40 30 / 0.35);
+    overflow: hidden;
+  }
+  .window-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-soft);
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+  .window-bar i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .window-bar span {
+    margin-left: 8px;
+  }
+  .feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: center;
+    padding: 36px 0;
+  }
+  .feature.flip .feature-text {
+    order: 2;
+  }
+  @media (max-width: 860px) {
+    .feature {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 24px 0;
+    }
+    .feature.flip .feature-text {
+      order: 0;
+    }
+  }
+  .num {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+  .feature h3 {
+    font-size: 1.45rem;
+    letter-spacing: -0.01em;
+  }
+  .feature-lede {
+    color: var(--muted);
+  }
+  .ticks,
+  .checks,
+  .timeline {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ticks li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .ticks :global(.icon) {
+    margin-top: 4px;
+    color: var(--brand-text);
+  }
+  .rows {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 12px;
+    list-style: none;
+  }
+  .rows li {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .row-icon {
+    display: inline-flex;
+    padding: 7px;
+    border-radius: 8px;
+    color: var(--brand-text);
+    background: color-mix(in srgb, var(--brand) 12%, transparent);
+  }
+  .row-text {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.9rem;
+  }
+  .row-text strong,
+  .row-text small {
+    display: block;
+  }
+  .row-text small {
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+  .pill {
+    flex: none;
+    padding: 2px 9px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+  .pill.high {
+    border-color: color-mix(in srgb, var(--danger) 45%, transparent);
+    color: var(--danger);
+  }
+  .pill.ok-pill {
+    border-color: color-mix(in srgb, var(--brand) 45%, transparent);
+    color: var(--brand-text);
+  }
+  .verdict {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .verdict p {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .verdict-icon,
+  .checks .bad {
+    color: var(--danger);
+  }
+  .checks,
+  .timeline {
+    padding: 14px 16px;
+    font-size: 0.9rem;
+  }
+  .checks li,
+  .timeline li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .checks li {
+    color: var(--brand-text);
+  }
+  .checks li.wait {
+    color: var(--muted);
+  }
+  .ship {
+    padding: 16px;
+  }
+  .ship-branch {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+  .ship-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .fake-button {
+    padding: 7px 14px;
+    border-radius: 8px;
+    color: #fff;
+    background: var(--brand);
+    font-weight: 600;
+  }
+  .muted {
+    color: var(--muted);
+  }
+  .ship .timeline {
+    padding: 14px 0 0;
+  }
+  .timeline :global(.icon) {
+    color: var(--brand-text);
+  }
+  .how-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+  }
+  .ring {
+    max-width: 420px;
+    justify-self: center;
+    width: 100%;
+  }
+  @media (max-width: 860px) {
+    .how-grid {
+      grid-template-columns: 1fr;
+    }
+    .ring {
+      max-width: 340px;
+    }
+  }
+  .cta {
+    padding: 48px 24px;
+    border-radius: 18px;
+    background: var(--bg-soft);
+    text-align: center;
+  }
+  .cta p {
+    color: var(--muted);
+  }
+  .cta .email {
+    margin-top: 16px;
+    font-size: 1rem;
   }
 </style>

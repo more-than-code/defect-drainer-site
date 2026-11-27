@@ -21,6 +21,7 @@
     </a>
     <nav aria-label="Main">
       <a class="nav-link wide-only" href="/#how-it-works">How it works</a>
+      <a class="nav-link wide-only" href="/#github">Compared with GitHub</a>
       <a class="nav-link wide-only" href="/#agent">What the agent can do</a>
       <a class="button small" href={SIGN_IN_URL}>Sign in</a>
     </nav>
@@ -54,6 +55,7 @@
     --brand-text: #0b5a46;
     --on-brand: #ffffff;
     --ok: #0b6b3a;
+    --danger: #b42318;
     --code-bg: #eef3f1;
     --radius: 12px;
     --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -71,6 +73,7 @@
       --brand-text: #7fd8b9;
       --on-brand: #06231b;
       --ok: #6fd69c;
+      --danger: #f97066;
       --code-bg: #101a17;
     }
   }
