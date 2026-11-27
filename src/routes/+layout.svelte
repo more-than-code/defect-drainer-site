@@ -56,6 +56,8 @@
     --on-brand: #ffffff;
     --ok: #0b6b3a;
     --danger: #b42318;
+    --warn: #8a5300;
+    --info: #1d5fb8;
     --code-bg: #eef3f1;
     --radius: 12px;
     --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -74,6 +76,8 @@
       --on-brand: #06231b;
       --ok: #6fd69c;
       --danger: #f97066;
+      --warn: #f5b94a;
+      --info: #84adff;
       --code-bg: #101a17;
     }
   }

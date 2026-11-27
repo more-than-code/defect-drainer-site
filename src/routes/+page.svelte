@@ -147,12 +147,12 @@
       <article class="value">
         <div class="mini" aria-hidden="true">
           <div class="mini-col">
-            <span class="chip"><Icon name="people" size={16} /> Tester</span>
-            <span class="chip"><Icon name="inbox" size={16} /> Your app</span>
-            <span class="chip"><Icon name="agent" size={16} /> Agent</span>
+            <span class="chip info"><Icon name="people" size={16} /> Tester</span>
+            <span class="chip info"><Icon name="inbox" size={16} /> Your app</span>
+            <span class="chip info"><Icon name="agent" size={16} /> Agent</span>
           </div>
           <span class="arrow"></span>
-          <span class="chip strong"><Icon name="inventory" size={16} /> One list</span>
+          <span class="chip strong info"><Icon name="inventory" size={16} /> One list</span>
         </div>
         <h3>Bugs from anyone</h3>
         <p>Testers and customers report without GitHub access. Your app and agents file bugs too.</p>
@@ -160,11 +160,11 @@
       <article class="value">
         <div class="mini" aria-hidden="true">
           <div class="mini-col">
-            <span class="chip"><Icon name="agent" size={16} /> Our agent</span>
-            <span class="chip"><Icon name="plug" size={16} /> Your agent</span>
+            <span class="chip warn"><Icon name="agent" size={16} /> Our agent</span>
+            <span class="chip warn"><Icon name="plug" size={16} /> Your agent</span>
           </div>
           <span class="arrow"></span>
-          <span class="chip strong"><Icon name="fix" size={16} /> Fix branch</span>
+          <span class="chip strong warn"><Icon name="fix" size={16} /> Fix branch</span>
         </div>
         <h3>Fixing is the agent's job</h3>
         <p>Our coding agent or yours takes each bug in its own branch. No two agents work the same bug.</p>
@@ -177,7 +177,7 @@
             <span class="chip ok"><Icon name="check" size={16} /> Evidence</span>
           </div>
           <span class="arrow"></span>
-          <span class="chip strong"><Icon name="ship" size={16} /> Your PR</span>
+          <span class="chip strong ok"><Icon name="ship" size={16} /> Your PR</span>
         </div>
         <h3>You review only proven fixes</h3>
         <p>Defect Drainer re-runs your checks and an independent reviewer. A fix that fails is held, with the reason.</p>
@@ -192,40 +192,40 @@
       <h2 id="action-title">See it in action</h2>
       <p class="section-lede">One bug in a made-up shop app, from report to merge.</p>
       <ol class="walk">
-        <li><span class="walk-icon"><Icon name="camera" size={18} /></span><span><strong>A tester reports it</strong> with a screenshot: the cart total shows NaN.</span></li>
-        <li><span class="walk-icon"><Icon name="fix" size={18} /></span><span><strong>An agent fixes it</strong> in its own branch.</span></li>
-        <li><span class="walk-icon"><Icon name="prove" size={18} /></span><span><strong>Defect Drainer proves it:</strong> your checks re-run, a separate reviewer, an after-fix screenshot.</span></li>
-        <li><span class="walk-icon"><Icon name="ship" size={18} /></span><span><strong>You open the pull request</strong> and merge it. The bug closes.</span></li>
+        <li><span class="walk-icon info"><Icon name="camera" size={18} /></span><span><strong>A tester reports it</strong> with a screenshot: the cart total shows NaN.</span></li>
+        <li><span class="walk-icon warn"><Icon name="fix" size={18} /></span><span><strong>An agent fixes it</strong> in its own branch.</span></li>
+        <li><span class="walk-icon ok"><Icon name="prove" size={18} /></span><span><strong>Defect Drainer proves it:</strong> your checks re-run, a separate reviewer, an after-fix screenshot.</span></li>
+        <li><span class="walk-icon ok"><Icon name="ship" size={18} /></span><span><strong>You open the pull request</strong> and merge it. The bug closes.</span></li>
       </ol>
     </div>
     <figure class="example-art">
       <div class="window example">
         <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>BATCH-0031 · acme-shop</span></div>
       <div class="defect">
-        <span class="tag">DEF-0142 · high</span>
+        <span class="tag">DEF-0142</span> <span class="status danger">high</span>
         <h3>Cart total shows NaN after removing the last coupon</h3>
         <p>Reported from the console with one screenshot. Steps: add 2 items, apply SAVE10, remove it.</p>
       </div>
       <ul class="gates">
         <li>
           <span><strong>Baseline recorded.</strong> Your checks ran before the change: 1 failing test reproduced the bug.</span>
-          <span class="ok">pass</span>
+          <span class="status ok">pass</span>
         </li>
         <li>
           <span><strong>Agent run.</strong> Claude Code{#if f.WORKER_LIVE}&nbsp;on your worker{/if} · 2 iterations · 3 files changed.</span>
-          <span class="ok">done</span>
+          <span class="status info">done</span>
         </li>
         <li>
           <span><strong>Your checks re-run by Defect Drainer.</strong> <code>pnpm test</code> · <code>pnpm check</code> · 412 passed.</span>
-          <span class="ok">pass</span>
+          <span class="status ok">pass</span>
         </li>
         <li>
           <span><strong>Fix evidence.</strong> After-screenshot shows the correct total.</span>
-          <span class="ok">attached</span>
+          <span class="status ok">attached</span>
         </li>
         <li>
           <span><strong>Independent review.</strong> A separate read-only run, one lens at a time. A critical or high finding blocks the fix.</span>
-          <span class="ok">0 blocking</span>
+          <span class="status ok">0 blocking</span>
         </li>
       </ul>
       <p class="branch">Branch <code>defect-drainer/BATCH-0031</code> · not pushed until you click Create PR.</p>
@@ -240,17 +240,17 @@
     <h2 id="cases-title">Use cases</h2>
     <div class="cases">
       <article class="case">
-        <span class="case-icon"><Icon name="people" /></span>
+        <span class="case-icon info"><Icon name="people" /></span>
         <h3>QA finds it, an agent fixes it</h3>
         <p>Your testers file what they see, in plain words, with screenshots. Pick a batch, and each verified fix waits for you as a branch ready for a pull request.</p>
       </article>
       <article class="case">
-        <span class="case-icon"><Icon name="agent" /></span>
+        <span class="case-icon warn"><Icon name="agent" /></span>
         <h3>Your own agent works the backlog</h3>
         <p>Connect Claude Code or any MCP agent. It claims a bug, fixes it and submits its branch. Its fix passes the same checks as ours.</p>
       </article>
       <article class="case">
-        <span class="case-icon"><Icon name="inbox" /></span>
+        <span class="case-icon ok"><Icon name="inbox" /></span>
         <h3>Feedback from your live app</h3>
         <p>Your app sends user reports and screenshots to the intake API. They land in the same list, ready to fix.</p>
       </article>
@@ -263,22 +263,22 @@
     <h2 id="how-title">How it's built</h2>
     <div class="parts">
       <article class="part">
-        <span class="case-icon"><Icon name="inventory" /></span>
+        <span class="case-icon info"><Icon name="inventory" /></span>
         <h3>Console</h3>
         <p>The bug list for each project, batches, test plans and review. Sign in with Google.</p>
       </article>
       <article class="part">
-        <span class="case-icon"><Icon name="plug" /></span>
+        <span class="case-icon warn"><Icon name="plug" /></span>
         <h3>MCP server</h3>
         <p>Any agent can report, claim, post progress, attach evidence and submit a fix.</p>
       </article>
       <article class="part">
-        <span class="case-icon"><Icon name="server" /></span>
+        <span class="case-icon ok"><Icon name="server" /></span>
         <h3>Worker</h3>
         <p>{#if f.WORKER_LIVE}Runs the coding agent on your own worker, in a sandbox with per-job limits.{:else}Runs the coding agent in a sandbox on a machine you own. Arrives with its first release.{/if}</p>
       </article>
       <article class="part">
-        <span class="case-icon"><Icon name="prove" /></span>
+        <span class="case-icon ok"><Icon name="prove" /></span>
         <h3>Verification</h3>
         <p>Your check commands, an independent reviewer and fix evidence, run by Defect Drainer itself.</p>
       </article>
@@ -479,11 +479,6 @@ go build ./cmd/dd-worker</code></pre>
     padding: 12px 16px;
     border-bottom: 1px solid var(--border);
     font-size: 0.95rem;
-  }
-  .ok {
-    flex: none;
-    color: var(--ok);
-    font-weight: 600;
   }
   .branch {
     margin: 0;
@@ -711,14 +706,8 @@ go build ./cmd/dd-worker</code></pre>
     font-size: 0.82rem;
     white-space: nowrap;
   }
-  .chip.ok {
-    color: var(--brand-text);
-  }
   .chip.strong {
-    border-color: var(--brand);
-    color: var(--bg);
-    background: var(--brand);
-    font-weight: 600;
+    font-weight: 700;
   }
   .arrow {
     flex: 1;
@@ -823,5 +812,48 @@ go build ./cmd/dd-worker</code></pre>
     padding-left: 1.2em;
     color: var(--muted);
     text-align: left;
+  }
+  /* Semantic colours: ok = passed or done well, info = reported or neutral
+     facts, warn = in progress, danger = failed, blocked or high severity.
+     Text sits on a 14% tint of its own colour (AA in both themes). */
+  .ok {
+    --tone: var(--ok);
+  }
+  .info {
+    --tone: var(--info);
+  }
+  .warn {
+    --tone: var(--warn);
+  }
+  .danger {
+    --tone: var(--danger);
+  }
+  .status {
+    flex: none;
+    align-self: flex-start;
+    padding: 1px 9px;
+    border-radius: 999px;
+    color: var(--tone);
+    background: color-mix(in srgb, var(--tone) 14%, transparent);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .chip.ok,
+  .chip.info,
+  .chip.warn,
+  .walk-icon.ok,
+  .walk-icon.info,
+  .walk-icon.warn,
+  .case-icon.ok,
+  .case-icon.info,
+  .case-icon.warn {
+    border-color: color-mix(in srgb, var(--tone) 35%, transparent);
+    color: var(--tone);
+    background: color-mix(in srgb, var(--tone) 14%, var(--card));
+  }
+  .chip.strong.ok,
+  .chip.strong.info,
+  .chip.strong.warn {
+    border-color: var(--tone);
   }
 </style>

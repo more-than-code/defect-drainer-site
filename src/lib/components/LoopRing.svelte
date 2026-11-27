@@ -68,21 +68,31 @@
 
 <style>
   .ring {
-    --seg: #0f6e56;
-    --seg-key: #0a513f;
-    --seg-hi: #16936f;
     --on-seg: #ffffff;
     display: block;
     width: 100%;
     height: auto;
     font-family: var(--font);
   }
-  @media (prefers-color-scheme: dark) {
-    .ring {
-      --seg: #12886a;
-      --seg-key: #0d6650;
-      --seg-hi: #1fb08a;
-    }
+  /* One colour per stage, cool to warm around the loop. All carry white
+     text at 5:1 or better; Prove keeps the darkest brand green. */
+  .s1 {
+    --seg: #2b5fa3;
+  }
+  .s2 {
+    --seg: #1d6f8f;
+  }
+  .s3 {
+    --seg: #0e7268;
+  }
+  .s4 {
+    --seg: #0a513f;
+  }
+  .s5 {
+    --seg: #2f7a33;
+  }
+  .s6 {
+    --seg: #8a5a0c;
   }
   .track {
     fill: none;
@@ -96,9 +106,6 @@
   }
   .seg path {
     fill: var(--seg);
-  }
-  .seg.key path {
-    fill: var(--seg-key);
   }
   .seg text {
     fill: var(--on-seg);
@@ -185,11 +192,11 @@
     0%,
     20%,
     100% {
-      fill: var(--seg);
+      filter: none;
     }
     6%,
     14% {
-      fill: var(--seg-hi);
+      filter: brightness(1.25) saturate(1.1);
     }
   }
 </style>
