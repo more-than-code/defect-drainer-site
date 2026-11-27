@@ -20,7 +20,6 @@
       <span>Defect Drainer</span>
     </a>
     <nav aria-label="Main">
-      <a class="nav-link wide-only" href="/#action">See it in action</a>
       <a class="nav-link wide-only" href="/#cases">Use cases</a>
       <a class="nav-link wide-only" href="/#github">Compared with GitHub</a>
       <a class="button small" href={SIGN_IN_URL}>Sign in</a>

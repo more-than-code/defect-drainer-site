@@ -131,7 +131,7 @@
         reviews fixes that already pass.
       </p>
       <div class="actions">
-        <a class="button" href={SIGN_IN_URL}>Sign in</a>
+        <a class="button" href="mailto:{SUPPORT_EMAIL}">Ask for an invite</a>
         <a class="button secondary" href="#action">See it in action</a>
       </div>
       <p class="note">{f.WORKER_LIVE ? EARLY_ACCESS_NOTE : EARLY_ACCESS_NOTE_PRE_WORKER}</p>
@@ -353,8 +353,8 @@ go build ./cmd/dd-worker</code></pre>
           <li><strong>{step.title}.</strong> {step.text}</li>
         {/each}
       </ol>
-      <a class="button" href={SIGN_IN_URL}>Sign in</a>
-      <p class="email">Ask for an invite: <a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a></p>
+      <a class="button" href="mailto:{SUPPORT_EMAIL}">Ask for an invite</a>
+      <p class="email">Already invited? <a href={SIGN_IN_URL}>Sign in</a></p>
     </div>
   </div>
 </section>
@@ -596,9 +596,8 @@ go build ./cmd/dd-worker</code></pre>
     overflow-wrap: normal;
   }
   .email {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
-    user-select: all;
   }
   .email a,
   .tap {

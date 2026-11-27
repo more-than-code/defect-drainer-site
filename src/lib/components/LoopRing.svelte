@@ -33,7 +33,7 @@
   <g class="seg s3">
     <path d="M711.9 407.6A312 312 0 0 1 562.6 666.3L506.3 574.1A204 204 0 0 0 603.9 405.0Z" />
     <text class="num" x="623.4" y="505">03</text><text class="name" x="623.4" y="533">Fix</text>
-    <text class="sub" x="623.4" y="557">in its own branch</text>
+    <text class="sub" x="623.4" y="557">own branch</text>
   </g>
   <g class="seg s4 key">
     <path d="M549.4 673.9A312 312 0 0 1 250.6 673.9L302.3 579.1A204 204 0 0 0 497.7 579.1Z" />
