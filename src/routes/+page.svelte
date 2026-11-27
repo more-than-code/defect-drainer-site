@@ -36,6 +36,70 @@
       },
     ].filter((s) => !!s),
   );
+
+  // DD vs GitHub (lh0w). DD facts are checked against the control plane's dev
+  // branch on 2026-11-27; GitHub facts against GitHub's own docs. No URLs:
+  // the guards allow only our hosts. Columns: Defect Drainer, GitHub Issues
+  // (with issue forms and Projects), the Copilot coding agent (with Actions).
+  /** @type {{ topic: string, dd: string, issues: string, agent: string }[]} */
+  const compare = $derived(
+    [
+      {
+        topic: 'Who can report on a private repo',
+        dd: 'Anyone you invite to your organisation, signed in with Google. No GitHub account and no access to the repository.',
+        issues: 'Only people with read access to the repository, which also lets them read the code. Issue forms shape a report but don\'t widen who can file one.',
+        agent: 'Works from issues that are already filed.',
+      },
+      {
+        topic: 'Reports from your app and tools',
+        dd: 'An intake API with a token that can only file defects, up to 12 screenshots each. A retry with the same key never files twice.',
+        issues: 'The REST API, with a token that has access to the repository.',
+        agent: '-',
+      },
+      {
+        topic: 'Who fixes it',
+        dd: 'Your coding agent: Claude Code or Grok run by Defect Drainer, or any agent that connects over MCP and claims the defect.',
+        issues: 'The person you assign.',
+        agent: 'The coding agent you assign the issue to.',
+      },
+      {
+        topic: 'Where the code is checked out',
+        dd: 'On a machine you own, through the Defect Drainer worker: a seccomp filter and per-job CPU and memory limits around each job. An MCP agent works in its own checkout.',
+        issues: 'Wherever the person works.',
+        agent: 'In a GitHub Actions environment, on GitHub\'s runners unless you set up your own.',
+      },
+      {
+        topic: 'Many agents on one backlog',
+        dd: 'A claim gives one holder per defect, at most 5 open claims each, and lapses after 4 hours without progress. Progress notes go on the defect\'s timeline.',
+        issues: 'Assignees and comments. Nothing stops two people or agents working the same issue.',
+        agent: 'One agent session and pull request per assigned issue.',
+      },
+      {
+        topic: 'Proof of the fix',
+        dd: 'An after-fix screenshot from this claim, or a stated reason when nothing is visible. Your check commands re-run, and an independent reviewer\'s critical or high finding blocks it.',
+        issues: 'Whatever someone attaches to a comment.',
+        agent: 'The agent can run your tests. You review its pull request.',
+      },
+      {
+        topic: 'What closes it',
+        dd: 'Defect Drainer resolves a defect once it checks on GitHub that the merged pull request is the claim\'s fix. Closing without proof is allowed and recorded as unproven.',
+        issues: 'Anyone with triage access, or a merged pull request that says "Fixes #123".',
+        agent: 'Merging its pull request closes the issue, as with any pull request.',
+      },
+      {
+        topic: 'Where the fix lands',
+        dd: 'A normal GitHub pull request. A fix Defect Drainer runs is pushed only when you click Create PR.',
+        issues: 'A pull request.',
+        agent: 'A pull request opened by the agent.',
+      },
+      f.OSS_RELEASE && {
+        topic: 'Code you can read',
+        dd: 'The worker is open source (Apache-2.0). Read what it does and build it yourself.',
+        issues: 'A hosted service.',
+        agent: 'A hosted service.',
+      },
+    ].filter((r) => !!r),
+  );
 </script>
 
 <svelte:head>
@@ -78,7 +142,7 @@
       <li>
         <span class="step-name">Report</span>
         <strong>A bug with a screenshot</strong>
-        <span>From the console, the ingest API, or a detector script.</span>
+        <span>From the console, an agent over MCP, or the intake API.</span>
         <code>DEF-0142</code>
       </li>
       <li>
@@ -153,37 +217,40 @@
   </div>
 </section>
 
-<section class="band" aria-labelledby="why-title">
+<section class="band" id="github" aria-labelledby="github-title">
   <div class="wrap">
-    <h2 id="why-title">Why not just ask an agent?</h2>
-    <div class="grid three">
-      <div class="card">
-        <h3>Chat with a coding agent</h3>
-        <ul class="plain">
-          <li>Fast for one bug</li>
-          <li>No record of what was asked or fixed</li>
-          <li>Edits your working copy</li>
-          <li>You check the result yourself</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Tracker plus manual fixes</h3>
-        <ul class="plain">
-          <li>A record of every bug</li>
-          <li>Every fix waits for a person</li>
-          <li>Proof lives in someone's head</li>
-        </ul>
-      </div>
-      <div class="card highlight">
-        <h3>Defect Drainer</h3>
-        <ul class="plain">
-          <li>A record of every bug, with evidence</li>
-          <li>Isolated branches, many bugs per batch</li>
-          <li>Your checks re-run, plus an independent review</li>
-          <li>A PR only for fixes that pass</li>
-        </ul>
-      </div>
+    <h2 id="github-title">Already on GitHub Issues? Keep it.</h2>
+    <p class="section-lede">
+      GitHub Issues records what's broken. Defect Drainer gets it fixed and proves it. It works next to your tracker,
+      and every fix still lands as a normal pull request in your repository.
+    </p>
+    <div class="compare-scroll">
+      <table class="compare">
+        <caption class="visually-hidden">Defect Drainer compared with GitHub Issues and the Copilot coding agent</caption>
+        <thead>
+          <tr>
+            <th scope="col"><span class="visually-hidden">Topic</span></th>
+            <th scope="col" class="dd-col">Defect Drainer</th>
+            <th scope="col">GitHub Issues, issue forms, Projects</th>
+            <th scope="col">Copilot coding agent, Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {#each compare as row (row.topic)}
+            <tr>
+              <th scope="row">{row.topic}</th>
+              <td class="dd-col" data-label="Defect Drainer">{row.dd}</td>
+              <td data-label="GitHub Issues">{row.issues}</td>
+              <td data-label="Copilot coding agent">{row.agent}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
     </div>
+    <p class="note">
+      <strong>Planned, not built yet:</strong> two-way sync with GitHub Issues, so your issues and Defect Drainer's
+      defects stay in step. GitHub facts as of November 2026, from GitHub's documentation.
+    </p>
   </div>
 </section>
 
@@ -194,7 +261,7 @@
       <div class="card">
         <span class="kicker">inventory</span>
         <h3>Every bug in one place</h3>
-        <p>Defects per project, with screenshots, severity and status. Search and analytics included.</p>
+        <p>Defects per project, with screenshots, severity and status. Testers and customers you invite report with a Google sign-in, with no GitHub access.</p>
       </div>
       <div class="card">
         <span class="kicker">batch fix</span>
@@ -217,9 +284,9 @@
         <p>Run a test plan by hand or with an agent, and file a defect straight from a failed step.</p>
       </div>
       <div class="card">
-        <span class="kicker">your agent</span>
-        <h3>The agent you already use</h3>
-        <p>Claude Code or Grok, signed in on your own machine. Defect Drainer never holds your agent's login.</p>
+        <span class="kicker">bring your own agent</span>
+        <h3>Any agent, one work log</h3>
+        <p>Claude Code or Grok run by Defect Drainer, or your own agent over MCP: it claims a defect, posts progress, attaches evidence and submits its branch. Same proof rules for both. Defect Drainer never holds your agent's login.</p>
       </div>
     </div>
   </div>
@@ -451,6 +518,105 @@ go build ./cmd/dd-worker</code></pre>
     color: var(--muted);
     font-size: 0.9rem;
   }
+  .compare-scroll {
+    margin: 8px 0 16px;
+  }
+  .compare {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    font-size: 0.93rem;
+    overflow: hidden;
+  }
+  .compare th,
+  .compare td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+  .compare tbody tr:last-child th,
+  .compare tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .compare thead th {
+    background: var(--bg-soft);
+    font-size: 0.85rem;
+  }
+  .compare tbody th {
+    width: 16%;
+    font-weight: 600;
+  }
+  .compare td {
+    color: var(--muted);
+  }
+  .compare .dd-col {
+    width: 32%;
+    color: var(--text);
+    background: color-mix(in srgb, var(--brand) 8%, var(--card));
+  }
+  .compare thead .dd-col {
+    color: var(--brand-text);
+    background: color-mix(in srgb, var(--brand) 14%, var(--card));
+  }
+  @media (max-width: 760px) {
+    .compare thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+    .compare,
+    .compare tbody,
+    .compare tr,
+    .compare th,
+    .compare td {
+      display: block;
+      width: auto;
+    }
+    .compare tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+    .compare tbody tr:last-child {
+      border-bottom: 0;
+    }
+    .compare tbody th {
+      width: auto;
+      padding-bottom: 4px;
+      border-bottom: 0;
+      font-size: 1rem;
+    }
+    .compare td {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      border-bottom: 0;
+    }
+    .compare td::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 2px;
+      color: var(--brand-text);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .compare td:not(.dd-col)::before {
+      color: var(--muted);
+    }
+    .compare .dd-col {
+      width: auto;
+      margin: 0 10px;
+      border-radius: 8px;
+    }
+    .compare tbody tr > :last-child {
+      padding-bottom: 16px;
+    }
+  }
   .grid {
     display: grid;
     gap: 16px;
@@ -476,9 +642,6 @@ go build ./cmd/dd-worker</code></pre>
   .card p {
     margin: 0;
     color: var(--muted);
-  }
-  .card.highlight {
-    border: 2px solid var(--brand);
   }
   .plain {
     margin: 0;
