@@ -51,13 +51,15 @@ or `.js`, no URL outside our hosts and the public worker repo, gated wording, no
 ## Release (Cloudflare Pages)
 
 Cloudflare Pages builds this repo itself through its GitHub integration:
-merging into `main` publishes `defectdrainer.com`, and every pull request gets
-its own preview URL. Pages keeps every deployment, so a rollback is "promote
+merging into `main` publishes the site, and pushes to the agents' PR branches
+(`claude/*`, `byoa/*`) get a preview URL. Preview URLs are public to anyone who
+has the link. Pages keeps every deployment, so a rollback is "promote
 the previous deployment" in the Pages dashboard.
 
 | Pages setting | Value |
 |---|---|
-| Project name | `defect-drainer-site` |
+| Project name | `defectdrainer-site` (the older direct-upload project `defect-drainer-site` holds the name) |
+| Preview branches | Custom: include `claude/*`, `byoa/*` |
 | Production branch | `main` |
 | Framework preset | None |
 | Build command | `npx -y pnpm@11.1.3 install --frozen-lockfile && npx -y pnpm@11.1.3 build` |
