@@ -1,6 +1,6 @@
 <script>
   import { page } from '$app/state';
-  import { SIGN_IN_URL, SITE_ORIGIN, SUPPORT_EMAIL, TRADEMARK_LINE } from '$lib/site.js';
+  import { SIGN_IN_URL, SITE_ORIGIN, SUPPORT_EMAIL } from '$lib/site.js';
 
   let { data, children } = $props();
 
@@ -20,8 +20,8 @@
       <span>Defect Drainer</span>
     </a>
     <nav aria-label="Main">
-      <a class="nav-link wide-only" href="/#how-it-works">How it works</a>
-      <a class="nav-link wide-only" href="/#agent">What the agent can do</a>
+      <a class="nav-link wide-only" href="/#cases">Use cases</a>
+      <a class="nav-link wide-only" href="/#github">Compared with GitHub</a>
       <a class="button small" href={SIGN_IN_URL}>Sign in</a>
     </nav>
   </div>
@@ -33,7 +33,6 @@
 
 <footer class="site-footer">
   <div class="wrap footer-row">
-    <p>{TRADEMARK_LINE}</p>
     <ul class="footer-links">
       {#if data.legal.includes('privacy')}<li><a href="/privacy">Privacy</a></li>{/if}
       {#if data.legal.includes('terms')}<li><a href="/terms">Terms</a></li>{/if}
@@ -54,6 +53,9 @@
     --brand-text: #0b5a46;
     --on-brand: #ffffff;
     --ok: #0b6b3a;
+    --danger: #b42318;
+    --warn: #8a5300;
+    --info: #1d5fb8;
     --code-bg: #eef3f1;
     --radius: 12px;
     --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -71,6 +73,9 @@
       --brand-text: #7fd8b9;
       --on-brand: #06231b;
       --ok: #6fd69c;
+      --danger: #f97066;
+      --warn: #f5b94a;
+      --info: #84adff;
       --code-bg: #101a17;
     }
   }
@@ -187,13 +192,10 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 8px 24px;
     padding-top: 16px;
     padding-bottom: 16px;
-  }
-  .footer-row p {
-    margin: 0;
   }
   .footer-links {
     display: flex;
