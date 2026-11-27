@@ -1,6 +1,6 @@
 // Guards for the landing site (docs/hosting-and-landing.md §4.4 and §5.7).
 // They build three variants into .test-out/ and check every file in each,
-// plus `build/` when `pnpm build` made one (as `make site` does):
+// plus `build/` when `pnpm build` made one (as a plain `pnpm build` does):
 //   off    every flag 0: the build Ops uploads before launch
 //   on     WORKER_LIVE, GITHUB_LIVE, OSS_RELEASE = 1, LAUNCH = 0
 //   launch every flag 1, with placeholder (non-legal) Privacy/Terms fixtures

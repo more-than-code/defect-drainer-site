@@ -1,6 +1,4 @@
 node_modules/
 build/
 .svelte-kit/
-.DS_Store
-*.log
 .test-out/

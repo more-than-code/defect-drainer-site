@@ -1,6 +1,7 @@
 # Landing site (`defectdrainer.com`)
 
-Static landing site, spec `docs/hosting-and-landing.md` §4.4. SvelteKit 2 with
+Static landing site. Spec: `docs/hosting-and-landing.md` §4.4 in the control-plane repo
+(this site lived in its `site/` folder until 2026-11-27). SvelteKit 2 with
 `adapter-static`, `prerender = true` and `csr = false`: the output in `build/` is
 plain HTML and CSS with no client JavaScript. `scripts/postbuild.mjs` deletes the
 client bundles SvelteKit still emits (they would carry gated wording). There is
@@ -10,8 +11,16 @@ no `_redirects`: the apex serves only the site, and the console lives on
 
 ## Build
 
-From the repo root: `make site` (install, `pnpm check`, `pnpm build`, `pnpm test`).
-Or in `site/`: `pnpm install --frozen-lockfile && pnpm build`.
+Node 22 and pnpm 11 (`packageManager` in `package.json`):
+
+```sh
+pnpm install --frozen-lockfile
+pnpm check
+pnpm build      # writes build/
+pnpm test       # the guards below
+```
+
+`pnpm dev` serves it on port 8898.
 
 ## Gate flags
 
@@ -39,10 +48,26 @@ forbidden-names list, "open source" only about the worker, no `®`, no `<script>
 or `.js`, no URL outside our hosts and the public worker repo, gated wording, no
 `_redirects` in any build, and the legal-page rules.
 
-## Release
+## Release (Cloudflare Pages)
 
-CI (`.github/workflows/site.yml`) runs check, build and test; it never deploys.
-Ops uploads `site/build` to Cloudflare Pages with Wrangler, on Joe's yes.
+Cloudflare Pages builds this repo itself through its GitHub integration:
+merging into `main` publishes `defectdrainer.com`, and every pull request gets
+its own preview URL. Pages keeps every deployment, so a rollback is "promote
+the previous deployment" in the Pages dashboard.
+
+| Pages setting | Value |
+|---|---|
+| Project name | `defect-drainer-site` |
+| Production branch | `main` |
+| Framework preset | None |
+| Build command | `npx -y pnpm@11.1.3 install --frozen-lockfile && npx -y pnpm@11.1.3 build` |
+| Build output directory | `build` |
+| Root directory | (empty, the repo root) |
+| Environment variables | `NODE_VERSION=22`, `SKIP_DEPENDENCY_INSTALL=1`; gate flags (above) only when each is approved |
+| Custom domain | `defectdrainer.com` |
+
+CI (`.github/workflows/ci.yml`) runs check, build and the guards on every push
+and pull request. It never deploys.
 
 ## OG image
 
