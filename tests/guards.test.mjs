@@ -108,17 +108,22 @@ describe('wording', () => {
     }
   });
 
-  test('no registered-trademark sign anywhere (™ wording only)', () => {
+  test('no registered-trademark sign anywhere', () => {
     const hits = [...builtFiles(), ...sourceFiles()]
       .filter((f) => /®|&reg;|&#174;|&#xae;/i.test(f.text))
       .map((f) => `${f.variant}: ${f.rel}`);
     assert.deepEqual(hits, []);
   });
 
-  test('the footer carries the trademark line and the support address', () => {
+  // Joe, 2026-11-27: no trademark is registered, so the site makes no
+  // trademark claim at all.
+  test('the footer carries the support address and no trademark claim', () => {
     const html = readFileSync(join(outputs.off, 'index.html'), 'utf8');
-    assert.match(html, /Defect Drainer is a trademark of Mi Zhou\./);
     assert.match(html, /support@defectdrainer\.com/);
+    const hits = builtFiles()
+      .filter((f) => /\.(html|txt|xml)$/.test(f.rel) && /trademark|™/i.test(f.text))
+      .map((f) => `${f.variant}: ${f.rel}`);
+    assert.deepEqual(hits, []);
   });
 });
 

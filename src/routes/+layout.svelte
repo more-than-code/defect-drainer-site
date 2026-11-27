@@ -1,6 +1,6 @@
 <script>
   import { page } from '$app/state';
-  import { SIGN_IN_URL, SITE_ORIGIN, SUPPORT_EMAIL, TRADEMARK_LINE } from '$lib/site.js';
+  import { SIGN_IN_URL, SITE_ORIGIN, SUPPORT_EMAIL } from '$lib/site.js';
 
   let { data, children } = $props();
 
@@ -33,7 +33,6 @@
 
 <footer class="site-footer">
   <div class="wrap footer-row">
-    <p>{TRADEMARK_LINE}</p>
     <ul class="footer-links">
       {#if data.legal.includes('privacy')}<li><a href="/privacy">Privacy</a></li>{/if}
       {#if data.legal.includes('terms')}<li><a href="/terms">Terms</a></li>{/if}
@@ -193,13 +192,10 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 8px 24px;
     padding-top: 16px;
     padding-bottom: 16px;
-  }
-  .footer-row p {
-    margin: 0;
   }
   .footer-links {
     display: flex;
