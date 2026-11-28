@@ -6,8 +6,8 @@
   //   OSS_RELEASE  the Open source section
   import {
     DESCRIPTION,
-    EARLY_ACCESS_NOTE,
-    EARLY_ACCESS_NOTE_PRE_WORKER,
+    START_NOTE,
+    START_NOTE_PRE_WORKER,
     SIGN_IN_URL,
     SITE_ORIGIN,
     SUPPORT_EMAIL,
@@ -27,7 +27,7 @@
             title: 'Sign in and connect GitHub',
             text: 'Install the Defect Drainer GitHub App on the repositories you want fixed. Only those.',
           }
-        : { title: 'Sign in', text: 'Defect Drainer is invite-only during early access.' },
+        : { title: 'Sign in', text: 'Sign in with Google and create your organisation.' },
       f.WORKER_LIVE && {
         title: 'Add a worker',
         text: 'Install the worker on a machine you own and sign in your coding agent there. Your code is checked out on that machine.',
@@ -131,10 +131,10 @@
         reviews fixes that already pass.
       </p>
       <div class="actions">
-        <a class="button" href="mailto:{SUPPORT_EMAIL}">Ask for an invite</a>
+        <a class="button" href={SIGN_IN_URL}>Get started</a>
         <a class="button secondary" href="#action">See it in action</a>
       </div>
-      <p class="note">{f.WORKER_LIVE ? EARLY_ACCESS_NOTE : EARLY_ACCESS_NOTE_PRE_WORKER}</p>
+      <p class="note">{f.WORKER_LIVE ? START_NOTE : START_NOTE_PRE_WORKER}</p>
     </div>
     <div class="hero-art"><LoopRing /></div>
   </div>
@@ -353,8 +353,8 @@ go build ./cmd/dd-worker</code></pre>
           <li><strong>{step.title}.</strong> {step.text}</li>
         {/each}
       </ol>
-      <a class="button" href="mailto:{SUPPORT_EMAIL}">Ask for an invite</a>
-      <p class="email">Already invited? <a href={SIGN_IN_URL}>Sign in</a></p>
+      <a class="button" href={SIGN_IN_URL}>Get started</a>
+      <p class="email">Questions? <a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a></p>
     </div>
   </div>
 </section>

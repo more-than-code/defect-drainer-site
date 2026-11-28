@@ -96,9 +96,9 @@ describe('wording', () => {
     assert.deepEqual(hits, []);
   });
 
-  test('early-access line: the pre-worker sentence only while WORKER_LIVE=0 (brief C.2)', () => {
+  test('sign-up line: the pre-worker sentence only while WORKER_LIVE=0 (brief C.2)', () => {
     const pre =
-      'Invite only during early access. Fixes run on your own machine through the Defect Drainer worker, which arrives with its first release.';
+      'Sign in with Google and create your organisation. Fixes run on your own machine through the Defect Drainer worker, which arrives with its first release.';
     const hero = (dir) => visibleText(readFileSync(join(dir, 'index.html'), 'utf8')).replace(/\s+/g, ' ');
     const llms = (dir) => readFileSync(join(dir, 'llms.txt'), 'utf8');
     assert.ok(hero(outputs.off).includes(pre), 'off: hero');
@@ -106,7 +106,7 @@ describe('wording', () => {
     for (const variant of ['on', 'launch']) {
       assert.ok(!hero(outputs[variant]).includes('arrives with its first release'), `${variant}: hero`);
       assert.ok(!llms(outputs[variant]).includes('arrives with its first release'), `${variant}: llms.txt`);
-      assert.ok(hero(outputs[variant]).includes('Invite only during early access.'), `${variant}: hero short line`);
+      assert.ok(hero(outputs[variant]).includes('Sign in with Google and create your organisation.'), `${variant}: hero short line`);
     }
   });
 
