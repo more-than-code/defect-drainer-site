@@ -5,7 +5,8 @@ export const prerender = true;
 import { readFlags } from '$lib/flags.js';
 import {
   CONSOLE_ORIGIN,
-  EARLY_ACCESS_NOTE_PRE_WORKER,
+  START_NOTE,
+  START_NOTE_PRE_WORKER,
   INTAKE_URL,
   SITE_ORIGIN,
   SUPPORT_EMAIL,
@@ -20,7 +21,7 @@ export function GET() {
     '',
     '> Bugs in, verified fixes out. Defect Drainer collects bug reports with screenshots, runs your own coding agent on them in isolated git branches, re-runs your checks, has an independent reviewer look at every fix, and opens a pull request only for fixes that pass.',
     '',
-    f.WORKER_LIVE ? 'Defect Drainer is invite-only during early access.' : EARLY_ACCESS_NOTE_PRE_WORKER,
+    f.WORKER_LIVE ? START_NOTE : START_NOTE_PRE_WORKER,
     '',
     '## What it does',
     '',
