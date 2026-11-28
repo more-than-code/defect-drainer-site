@@ -36,9 +36,12 @@ the build. A gated claim is absent from the HTML and `llms.txt` while its flag i
 
 ## Privacy and Terms
 
-`/privacy` and `/terms` are built only from Joe-approved HTML fragments at
-`src/content/privacy.html` and `src/content/terms.html`. Until both exist, neither
-page is built or linked, and `LAUNCH=1` fails.
+`/privacy` and `/terms` are built from the HTML fragments
+`src/content/privacy.html` and `src/content/terms.html`. A missing file's page is
+not built or linked, and `LAUNCH=1` fails. Blanks Joe still has to fill in are
+marked `<mark data-draft>`: previews show them highlighted, and the production
+build (`CF_PAGES_BRANCH=main`) and `LAUNCH=1` fail while any is left
+(`src/content/README.md`).
 
 ## Guards (`pnpm test`)
 

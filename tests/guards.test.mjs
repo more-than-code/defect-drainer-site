@@ -4,6 +4,7 @@
 //   off    every flag 0: the build Ops uploads before launch
 //   on     WORKER_LIVE, GITHUB_LIVE, OSS_RELEASE = 1, LAUNCH = 0
 //   launch every flag 1, with placeholder (non-legal) Privacy/Terms fixtures
+//   legal  every flag 0, with the repo's own src/content/ text (drafts render)
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -36,8 +37,9 @@ before(() => {
   outputs.launch = buildVariant(
     'launch',
     { WORKER_LIVE: '1', GITHUB_LIVE: '1', OSS_RELEASE: '1', LAUNCH: '1' },
-    { legalFixtures: true },
+    { legal: 'fixtures' },
   );
+  outputs.legal = buildVariant('legal', {}, { legal: 'repo' });
   if (existsSync(BUILD)) outputs.build = BUILD;
 });
 
@@ -197,6 +199,23 @@ describe('launch', () => {
     const sitemap = readFileSync(join(dir, 'sitemap.xml'), 'utf8');
     assert.match(sitemap, /defectdrainer\.com\/privacy/);
     assert.match(sitemap, /defectdrainer\.com\/terms/);
+  });
+
+  test("the repo's legal text builds into /privacy and /terms, linked from the footer", () => {
+    const dir = outputs.legal;
+    assert.match(readFileSync(join(dir, 'privacy.html'), 'utf8'), /<h1>Privacy Policy<\/h1>/);
+    assert.match(readFileSync(join(dir, 'terms.html'), 'utf8'), /<h1>Terms of Service<\/h1>/);
+    assert.match(readFileSync(join(dir, 'index.html'), 'utf8'), /href="\/privacy"[\s\S]*href="\/terms"/);
+  });
+
+  test('a draft blank in legal text fails the production and LAUNCH builds', () => {
+    const prod = buildFails({ CF_PAGES_BRANCH: 'main' }, { legal: 'draft' });
+    assert.match(prod, /draft legal text can't be published: src\/content\/privacy\.html/);
+    const launch = buildFails(
+      { WORKER_LIVE: '1', GITHUB_LIVE: '1', OSS_RELEASE: '1', LAUNCH: '1' },
+      { legal: 'draft' },
+    );
+    assert.match(launch, /draft legal text can't be published/);
   });
 
   test('LAUNCH=1 fails without approved legal text or live gates', () => {

@@ -2,9 +2,8 @@
 // page never sees them in the browser (csr = false). Every flag defaults to
 // off. Only "0" and "1" are accepted so a typo such as "true" fails the build
 // instead of silently leaving a claim out.
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 /** @typedef {{ WORKER_LIVE: boolean, GITHUB_LIVE: boolean, OSS_RELEASE: boolean, LAUNCH: boolean }} Flags */
 
@@ -14,7 +13,10 @@ const NAMES = /** @type {const} */ (['WORKER_LIVE', 'GITHUB_LIVE', 'OSS_RELEASE'
 export const LEGAL_SLUGS = /** @type {const} */ (['privacy', 'terms']);
 
 // SITE_CONTENT_DIR exists for the guard tests only (a temp dir of fixtures).
-const contentDir = process.env.SITE_CONTENT_DIR || fileURLToPath(new URL('../content/', import.meta.url));
+// The default is relative to the working directory, not import.meta.url: the
+// build bundles this file into .svelte-kit/output, where ../content/ is not
+// src/content/. Every build runs from the repo root (package.json scripts, Pages).
+const contentDir = process.env.SITE_CONTENT_DIR || join(process.cwd(), 'src', 'content');
 
 /** @param {string} slug */
 export function legalPath(slug) {
@@ -45,6 +47,31 @@ export function readFlags(env = process.env) {
     else throw new Error(`site build: ${name} must be 0 or 1, got ${JSON.stringify(raw)}`);
   }
   return /** @type {Flags} */ (flags);
+}
+
+/** Marks a blank in draft legal text; see src/content/README.md. */
+export const DRAFT_MARK = 'data-draft';
+
+/** @returns {string[]} the legal slugs whose text still has a draft blank */
+export function draftLegalSlugs() {
+  return builtLegalSlugs().filter((slug) => readFileSync(legalPath(slug), 'utf8').includes(DRAFT_MARK));
+}
+
+/**
+ * The production build (Cloudflare Pages on main sets CF_PAGES_BRANCH=main) and
+ * a LAUNCH build publish only finished legal text: fail while a draft blank is left.
+ * Preview and CI builds render drafts so Joe can read them.
+ * @param {Flags} flags
+ * @param {Record<string, string | undefined>} env
+ */
+export function assertLegalFinal(flags, env = process.env) {
+  if (!flags.LAUNCH && env.CF_PAGES_BRANCH !== 'main') return;
+  const drafts = draftLegalSlugs();
+  if (drafts.length) {
+    throw new Error(
+      `site build: draft legal text can't be published: ${drafts.map((s) => `src/content/${s}.html`).join(', ')} still has ${DRAFT_MARK} blanks`,
+    );
+  }
 }
 
 /**

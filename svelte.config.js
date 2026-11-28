@@ -1,8 +1,9 @@
 import adapter from '@sveltejs/adapter-static';
-import { assertLaunchReady, outDir, readFlags } from './src/lib/flags.js';
+import { assertLaunchReady, assertLegalFinal, outDir, readFlags } from './src/lib/flags.js';
 
 // Fails here, before any page renders, on a bad flag or an unready launch.
 assertLaunchReady(readFlags());
+assertLegalFinal(readFlags());
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
